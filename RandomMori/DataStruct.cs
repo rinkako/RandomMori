@@ -10,11 +10,11 @@ namespace RandomMori
         // 构造函数
         public Datacell(List<double> iattr, int itag)
         {
-            attribute = iattr;
-            tag = itag;
+            attributes = iattr;
+            klass = itag;
         }
-        public List<double> attribute = new List<double>();
-        public int tag = -1;
+        public List<double> attributes = new List<double>();
+        public int klass = -1;
     }
 
     public class Moricell
@@ -22,25 +22,32 @@ namespace RandomMori
         // 构造函数
         public Moricell(List<double> subattr, int stag)
         {
-            subAttribute = subattr;
-            tag = stag;
+            attributes = subattr;
+            klass = stag;
         }
-        public List<double> subAttribute = new List<double>();
-        public int tag = -1;
+        public List<double> attributes = new List<double>();
+        public int klass = -1;
     }
 
     public class MoriTreeNode
     {
         // 构造函数
-        public MoriTreeNode(List<Moricell> icellList, int isplitor, double ientropy)
+        public MoriTreeNode(int attr, int val)
         {
-            cellList = icellList;
-            splitor = isplitor;
-            entropy = ientropy;
+            branchAttr = attr;
+            attriveVal = val;
+            staticstic[0] = staticstic[1] = 0;
         }
-        public List<Moricell> cellList = new List<Moricell>();
-        public int splitor = -1;
-        public double entropy = 0;
+        // 划分属性
+        public int branchAttr;
+        // 到达该节点的属性值
+        public int attriveVal;
+        // 根据最佳属性的分支节点
+        public List<MoriTreeNode> childs = new List<MoriTreeNode>();
+        // 该分支下的决策结果，用于叶子节点
+        public int decisionVal;
+        // 统计该决策下的数据（民主派和共和派的个数）
+        public int[] staticstic = new int[121];
     }
 
     public class Mori

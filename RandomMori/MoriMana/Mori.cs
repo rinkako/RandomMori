@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 using RandomMori.DataMana;
-
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace RandomMori.MoriMana
 {
@@ -16,8 +13,8 @@ namespace RandomMori.MoriMana
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("# begin split input");
-            dataManager.loadTrainSet(Base.CONSTA.trainPath);
-            dataManager.loadTestSet(Base.CONSTA.testPath);
+            dataManager.LoadTrainSet(Base.CONSTA.trainPath);
+            dataManager.LoadTestSet(Base.CONSTA.testPath);
             Console.WriteLine("# split input OK");
             Console.ResetColor();
         }
@@ -73,7 +70,7 @@ namespace RandomMori.MoriMana
             while (workFlow.Count != 0)
             {
                 var myTree = workFlow.Dequeue();
-                myTree.grow((int)(Base.CONSTA.SampleNum / Base.CONSTA.Divider), Base.CONSTA.SplitNum, treeCounter++, Base.CONSTA.dt);
+                myTree.Grow((int)(Base.CONSTA.SampleNum / Base.CONSTA.Divider), Base.CONSTA.SplitNum, treeCounter++, Base.CONSTA.dt);
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("At thread {0}, build tree OK, Noc： {1} ({2}%)", handleId, workFlow.Count, ((double)(treenum - workFlow.Count) / treenum * 100).ToString("0.00"));
                 Console.ResetColor();
@@ -89,7 +86,7 @@ namespace RandomMori.MoriMana
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(">>> Running predicting job for " + pt.ToString());
             Console.ResetColor();
-            int dataBoundary = pt == Base.TestType.train ? dataManager.getTrainSet().Count : dataManager.getTestSet().Count;
+            int dataBoundary = pt == Base.TestType.train ? dataManager.GetTrainSet().Count : dataManager.GetTestSet().Count;
             int encounter = 0;
             result = new List<int>();
             List<int> outBuffer = new List<int>();
@@ -100,14 +97,14 @@ namespace RandomMori.MoriMana
                 for (int j = 0; j < Base.CONSTA.ClassNum; j++) { voteSpace.Add(0); }
                 for (int j = 0; j < bound; j++)
                 {
-                    Datacell dc = pt == Base.TestType.train ? dataManager.getTrainSet()[i] : dataManager.getTestSet()[i];
-                    dashNode va = new dashNode(dc.aTag, dc.attributes);
-                    voteSpace[forest[j].predict(va, Base.CONSTA.dt)]++;
+                    Datacell dc = pt == Base.TestType.train ? dataManager.GetTrainSet()[i] : dataManager.GetTestSet()[i];
+                    dashNode va = new dashNode(dc.Label, dc.Attributes);
+                    voteSpace[forest[j].Predict(va, Base.CONSTA.dt)]++;
                 }
                 result.Add(voteSpace.IndexOf(voteSpace.Max()));
                 if (pt == Base.TestType.train)
                 {
-                    encounter += result.Last() == dataManager.getTrainSet()[i].aTag ? 1 : 0;
+                    encounter += result.Last() == dataManager.GetTrainSet()[i].Label ? 1 : 0;
                 }
                 else
                 {
@@ -116,7 +113,7 @@ namespace RandomMori.MoriMana
             }
             if (pt == Base.TestType.test)
             {
-                dataManager.writeTestPredict(outBuffer, "dash.csv", Base.CONSTA.Tagoffset);
+                dataManager.WriteTestPredict(outBuffer, "dash.csv", Base.CONSTA.Tagoffset);
             }
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(">>> Predicted OK.");
@@ -134,7 +131,7 @@ namespace RandomMori.MoriMana
         // 工作队列
         private Queue<CART> workFlow = null;
         // 数据管理器
-        private DataManager dataManager = DataManager.getInstance();
+        private DataManager dataManager = DataManager.GetInstance();
         // 森林
         private List<CART> forest = new List<CART>();
     }

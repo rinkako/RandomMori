@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace RandomMori
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private MoriDriver core = MoriDriver.getInstance();
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             comboBox2.SelectedIndex = 0;
@@ -38,7 +32,7 @@ namespace RandomMori
                 Convert.ToInt32(comboBox1.Items[comboBox1.SelectedIndex]),
                 Convert.ToDouble(textBox7.Text));
             Base.CONSTA.dt = (Base.DashType)(comboBox2.SelectedIndex);
-            core.dashInPara();
+            core.DashInPara();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,7 +53,7 @@ namespace RandomMori
                 Convert.ToInt32(comboBox1.Items[comboBox1.SelectedIndex]),
                 Convert.ToDouble(textBox7.Text));
             Base.CONSTA.dt = (Base.DashType)(comboBox2.SelectedIndex);
-            core.dashInSerial();
+            core.DashInSerial();
         }
     }
 }

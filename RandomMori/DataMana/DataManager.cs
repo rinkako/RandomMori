@@ -1,39 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using RandomMori.DataMana;
+using System.Collections.Generic;
 
 namespace RandomMori.DataMana
 {
+	/// <summary>
+	/// 数据管理器类
+	/// </summary>
     public class DataManager
     {
-        // 构造器
-        private DataManager()
+		/// <summary>
+		/// 工厂方法：获得类的唯一实例
+		/// </summary>
+		/// <returns>数据管理器唯一实例</returns>
+        public static DataManager GetInstance()
         {
-            //
+            return DataManager.instance;
         }
 
-        // 工厂
-        public static DataManager getInstance()
+		/// <summary>
+		/// 载入训练集
+		/// </summary>
+		/// <param name="filename">文件路径</param>
+		public void LoadTrainSet(string filename = "train.csv")
         {
-            return instance;
+            ReadTrainData(filename, Base.CONSTA.Tagoffset);
         }
-
-        // 载入训练集
-        public void loadTrainSet(string filename = "train.csv")
+		
+		/// <summary>
+		/// 载入测试集
+		/// </summary>
+		/// <param name="filename">文件路径</param>
+		public void LoadTestSet(string filename = "test.csv")
         {
-            readTrainData(filename, Base.CONSTA.Tagoffset);
+            ReadTestData(filename);
         }
-
-        // 载入测试集
-        public void loadTestSet(string filename = "test.csv")
-        {
-            readTestData(filename);
-        }
-
-        // 写出测试集判定
-        public void writeTestPredict(List<int> predictList, string filename = "dash.csv", int offset = 0)
+		
+		/// <summary>
+		/// 写出测试集判定
+		/// </summary>
+		/// <param name="predictList">预测结果向量</param>
+		/// <param name="filename">要写出的文件路径</param>
+		/// <param name="offset">预测结果向量开始遍历位置的偏移</param>
+		public void WriteTestPredict(List<int> predictList, string filename = "dash.csv", int offset = 0)
         {
             StreamWriter sw = new StreamWriter(filename);
             sw.WriteLine("id,label");
@@ -44,21 +53,33 @@ namespace RandomMori.DataMana
             sw.Write("{0},{1}", predictList.Count - 1, predictList[predictList.Count - 1] + offset);
             sw.Close();
         }
-
-        // 获得训练集
-        public List<Datacell> getTrainSet()
+		
+		/// <summary>
+		/// 获得训练集
+		/// </summary>
+		/// <returns>训练集的数据包装向量</returns>
+		public List<Datacell> GetTrainSet()
         {
             return rawTrainSet;
         }
-
-        // 获得测试集
-        public List<Datacell> getTestSet()
+		
+		/// <summary>
+		/// 获得测试集
+		/// </summary>
+		/// <returns>测试集的数据包装向量</returns>
+		public List<Datacell> GetTestSet()
         {
             return testSet;
         }
 
-        // 训练数据读入并返回
-        private List<Datacell> readTrainData(string trainFile, int offset = 0, bool jump = true)
+		/// <summary>
+		/// 读入训练数据并返回
+		/// </summary>
+		/// <param name="trainFile">训练文件路径</param>
+		/// <param name="offset">类标的偏移量</param>
+		/// <param name="jump">是否需要跳过第一行</param>
+		/// <returns>数据包装向量</returns>
+		private List<Datacell> ReadTrainData(string trainFile, int offset = 0, bool jump = true)
         {
             rawTrainSet.Clear();
             StreamReader sr = new StreamReader(trainFile);
@@ -82,8 +103,14 @@ namespace RandomMori.DataMana
             return rawTrainSet;
         }
 
-        // 测试数据读入并返回
-        private List<Datacell> readTestData(string testFile, bool jump = true)
+		// 
+		/// <summary>
+		/// 读入测试数据并返回
+		/// </summary>
+		/// <param name="testFile">测试文件路径</param>
+		/// <param name="jump">是否需要跳过第一行</param>
+		/// <returns>数据包装向量</returns>
+		private List<Datacell> ReadTestData(string testFile, bool jump = true)
         {
             testSet.Clear();
             StreamReader sr = new StreamReader(testFile);
@@ -106,9 +133,29 @@ namespace RandomMori.DataMana
             return rawTrainSet;
         }
 
-        private List<Datacell> testSet = new List<Datacell>();
+		/// <summary>
+		/// 私有的构造器
+		/// </summary>
+		private DataManager() { }
+
+		/// <summary>
+		/// 测试集数据包装向量
+		/// </summary>
+		private List<Datacell> testSet = new List<Datacell>();
+
+		/// <summary>
+		/// 训练集数据包装向量
+		/// </summary>
         private List<Datacell> rawTrainSet = new List<Datacell>();
+
+		/// <summary>
+		/// 唯一实例
+		/// </summary>
         private static readonly DataManager instance = new DataManager();
+
+		/// <summary>
+		/// 抽样器实例
+		/// </summary>
         private Sampler coreSp = new Sampler();
     }
 }

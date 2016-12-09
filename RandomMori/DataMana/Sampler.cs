@@ -1,25 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RandomMori.DataMana
 {
+	/// <summary>
+	/// 取样器类
+	/// </summary>
     public class Sampler
     {
-        // 构造器
-        public Sampler()
-        {
-            //
-        }
-
-        // 获取随机值
-        public static int getRandomInt(int min, int max)
+		/// <summary>
+		/// 构造器
+		/// </summary>
+		public Sampler() { }
+		
+		/// <summary>
+		/// 获取一个范围随机整数值
+		/// </summary>
+		/// <param name="min">最小值</param>
+		/// <param name="max">最大值</param>
+		/// <returns>规定范围中的随机整数</returns>
+		public static int getRandomInt(int min, int max)
         {
             return randomer.Next(min, max);
         }
-
-        // 获得bootstrap的open列表
-        public static void bootstrapOpenlist(List<int> openlist, int bootstraper, int minb = 0, int maxb = 0)
+		
+		/// <summary>
+		/// 获得Bootstrap的开列表
+		/// </summary>
+		/// <param name="openlist">开列表</param>
+		/// <param name="bootstraper">挑选属性个数</param>
+		/// <param name="minb">属性下标最小值</param>
+		/// <param name="maxb">属性下标最大值</param>
+		public static void BootstrapOpenlist(List<int> openlist, int bootstraper, int minb = 0, int maxb = 1)
         {
             for (int i = 0; i < maxb; i++)
             {
@@ -36,6 +48,9 @@ namespace RandomMori.DataMana
             }
         }
 
+		/// <summary>
+		/// 随机数生成器
+		/// </summary>
         private static Random randomer = new Random();
     }
 }

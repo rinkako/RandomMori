@@ -8,22 +8,29 @@ using RandomMori.MoriMana;
 
 namespace RandomMori
 {
+	/// <summary>
+	/// 控制器类：负责前端与后台的交互
+	/// </summary>
     class MoriDriver
     {
-        // 私有构造器
-        private MoriDriver()
-        {
-            //
-        }
-
-        // 工厂
+		/// <summary>
+		/// 私有构造器
+		/// </summary>
+		private MoriDriver() { }
+		
+		/// <summary>
+		/// 工厂方法：获得类的唯一实例
+		/// </summary>
+		/// <returns>控制器唯一实例</returns>
         public static MoriDriver getInstance()
         {
-            return syncObject;
+            return MoriDriver.syncObject;
         }
-
-        // 异步生成森林
-        public void dashInPara()
+		
+		/// <summary>
+		/// 异步生成森林
+		/// </summary>
+		public void DashInPara()
         {
             DateTime dt = DateTime.Now;
             Mori m = new Mori();
@@ -36,17 +43,24 @@ namespace RandomMori
             Console.WriteLine("Cost: {0}s, Dash type: {1}", cost.ToString("0.00"), CONSTA.dt.ToString());
             Console.ResetColor();
         }
-
-        // 同步生成森林
-        public void dashInSerial()
+		
+		/// <summary>
+		/// 同步生成森林
+		/// </summary>
+		public void DashInSerial()
         {
             CONSTA.Thread = 1;
-            this.dashInPara();
+            this.DashInPara();
         }
-
-        // 训练集
+		
+		/// <summary>
+		/// 训练集向量
+		/// </summary>
         public List<Datacell> trainSet = new List<Datacell>();
-        // 唯一实例
-        private static readonly MoriDriver syncObject = new MoriDriver();
+
+		/// <summary>
+		/// 唯一实例
+		/// </summary>
+		private static readonly MoriDriver syncObject = new MoriDriver();
     }
 }

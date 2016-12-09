@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using RandomMori.Base;
-using RandomMori.DataMana;
 using RandomMori.MoriMana;
 
 namespace RandomMori
@@ -34,9 +31,9 @@ namespace RandomMori
         {
             DateTime dt = DateTime.Now;
             Mori m = new Mori();
-            m.grow(CONSTA.Treenum, CONSTA.Thread);
-            double acc = m.classify(TestType.train);
-            m.classify(TestType.test);
+            m.GrowAsync(CONSTA.Treenum, CONSTA.Thread);
+            double acc = m.Classify(TestType.train);
+            m.Classify(TestType.test);
             double cost = (DateTime.Now - dt).TotalSeconds;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Acc: {0} / {1}", (1 - acc).ToString("0.0000"), acc.ToString("0.0000"));

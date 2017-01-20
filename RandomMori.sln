@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomMori", "RandomMori\RandomMori.csproj", "{B4C3EEFC-FF4F-4E5D-A410-D104DD3E2A74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDMA_ETL", "CDMA_ETL\CDMA_ETL.csproj", "{ED3F19AA-8B4B-4978-8599-2AB21434C7AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B4C3EEFC-FF4F-4E5D-A410-D104DD3E2A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C3EEFC-FF4F-4E5D-A410-D104DD3E2A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C3EEFC-FF4F-4E5D-A410-D104DD3E2A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3F19AA-8B4B-4978-8599-2AB21434C7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3F19AA-8B4B-4978-8599-2AB21434C7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3F19AA-8B4B-4978-8599-2AB21434C7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3F19AA-8B4B-4978-8599-2AB21434C7AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

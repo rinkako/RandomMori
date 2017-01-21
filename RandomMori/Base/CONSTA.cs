@@ -56,12 +56,12 @@ namespace RandomMori.Base
 		/// <summary>
 		/// 类标总数
 		/// </summary>
-        public static int ClassNum = 26;
+        public static int ClassNum = 2;
 
 		/// <summary>
 		/// 属性总数
 		/// </summary>
-        public static int AttriNum = 617;
+        public static int AttriNum = 130;
 
 		/// <summary>
 		/// 数据集分裂的最小样本数
@@ -71,12 +71,12 @@ namespace RandomMori.Base
 		/// <summary>
 		/// 样本总数
 		/// </summary>
-        public static int SampleNum = 6238;
+        public static int SampleNum = 1000000;
 
 		/// <summary>
 		/// 类标在内存中和在文件中的偏移量
 		/// </summary>
-		public static int Tagoffset = 1;
+		public static int Tagoffset = 0;
 
 		/// <summary>
 		/// 树的数量

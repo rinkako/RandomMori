@@ -33,7 +33,7 @@ namespace RandomMori
             Mori m = new Mori();
             m.GrowAsync(CONSTA.Treenum, CONSTA.Thread);
             double acc = m.Classify(TestType.train);
-            m.Classify(TestType.test);
+            //m.Classify(TestType.test);
             double cost = (DateTime.Now - dt).TotalSeconds;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Acc: {0} / {1}", (1 - acc).ToString("0.0000"), acc.ToString("0.0000"));

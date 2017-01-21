@@ -79,7 +79,7 @@ namespace RandomMori.DataMana
 		/// <param name="offset">类标的偏移量</param>
 		/// <param name="jump">是否需要跳过第一行</param>
 		/// <returns>数据包装向量</returns>
-		private List<Datacell> ReadTrainData(string trainFile, int offset = 0, bool jump = true)
+		private List<Datacell> ReadTrainData(string trainFile, int offset = 0, bool jump = false)
         {
             rawTrainSet.Clear();
             StreamReader sr = new StreamReader(trainFile);
@@ -92,12 +92,17 @@ namespace RandomMori.DataMana
                 string line = sr.ReadLine();
                 string[] lineItem = line.Split(',');
                 int idx = Convert.ToInt32(lineItem[0]);
+                int tag = Convert.ToInt32(lineItem[4]);
+
+
+
+                //int idx = Convert.ToInt32(lineItem[0]);
                 List<double> attrs = new List<double>();
-                for (int i = 1; i <= Base.CONSTA.AttriNum; i++)
+                for (int i = 0; i < Base.CONSTA.AttriNum; i++)
                 {
-                    attrs.Add(Convert.ToDouble(lineItem[i].Trim()));
+                    attrs.Add(Convert.ToDouble(lineItem[i + 5].Trim()));
                 }
-                int tag = Convert.ToInt32(lineItem[Base.CONSTA.AttriNum + 1].Trim()) - offset;
+                //int tag = Convert.ToInt32(lineItem[Base.CONSTA.AttriNum + 1].Trim()) - offset;
                 rawTrainSet.Add(new Datacell(attrs, tag, idx));
             }
             return rawTrainSet;
@@ -110,7 +115,7 @@ namespace RandomMori.DataMana
 		/// <param name="testFile">测试文件路径</param>
 		/// <param name="jump">是否需要跳过第一行</param>
 		/// <returns>数据包装向量</returns>
-		private List<Datacell> ReadTestData(string testFile, bool jump = true)
+		private List<Datacell> ReadTestData(string testFile, bool jump = false)
         {
             testSet.Clear();
             StreamReader sr = new StreamReader(testFile);
@@ -122,7 +127,12 @@ namespace RandomMori.DataMana
             {
                 string line = sr.ReadLine();
                 string[] lineItem = line.Split(',');
+
                 int idx = Convert.ToInt32(lineItem[0]);
+                int tag = Convert.ToInt32(lineItem[4]);
+
+
+                //int idx = Convert.ToInt32(lineItem[0]);
                 List<double> attrs = new List<double>();
                 for (int i = 1; i <= Base.CONSTA.AttriNum; i++)
                 {

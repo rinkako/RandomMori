@@ -12,9 +12,15 @@ namespace CDMA_ETL
         {
             FileStream fs = new FileStream(path, FileMode.Open);
             StreamReader sr = new StreamReader(fs);
-            FileStream wfs = new FileStream("ETL_" + path, FileMode.Create);
-            StreamWriter sw = new StreamWriter(wfs);
-            DataETLer.DataList = new List<DataPackage>();
+            FileStream wfsA = new FileStream("ETL_A_" + path, FileMode.Create);
+            FileStream wfsB = new FileStream("ETL_B_" + path, FileMode.Create);
+            FileStream wfsC = new FileStream("ETL_C_" + path, FileMode.Create);
+            StreamWriter swA = new StreamWriter(wfsA);
+            StreamWriter swB = new StreamWriter(wfsB);
+            StreamWriter swC = new StreamWriter(wfsC);
+            DataETLer.DataListA = new List<DataPackage>();
+            DataETLer.DataListB = new List<DataPackage>();
+            DataETLer.DataListC = new List<DataPackage>();
             DataETLer.NormalParamList = new List<NormalPackage>();
             DataETLer.AccuArray = new double[130];
             DataETLer.Counter = 0;
@@ -49,7 +55,18 @@ namespace CDMA_ETL
                     dp.properties[i - 4] = v;
                     DataETLer.AccuArray[i - 4] += v;
                 }
-                DataETLer.DataList.Add(dp);
+                if (newtype == 1)
+                {
+                    DataETLer.DataListA.Add(dp);
+                }
+                else if (newtype == 2)
+                {
+                    //DataETLer.DataListB.Add(dp);
+                }
+                else if (newtype == 3)
+                {
+                    //DataETLer.DataListC.Add(dp);
+                }
             }
             // 计算统计量
             for (int i = 0; i < 130; i++)
@@ -57,30 +74,64 @@ namespace CDMA_ETL
                 DataETLer.NormalizePrepare(i);
             }
             // 输出
-            for (int i = 0; i < DataETLer.DataList.Count; i++)
+            for (int i = 0; i < DataETLer.DataListA.Count; i++)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(DataETLer.DataList[i].id).Append(",");
-                sb.Append(DataETLer.DataList[i].new_type).Append(",");
-                sb.Append(DataETLer.DataList[i].org_amt).Append(",");
-                sb.Append(DataETLer.DataList[i].new_amt).Append(",");
-                sb.Append(DataETLer.DataList[i].amt_flag == true ? "1" : "0");
+                sb.Append(DataETLer.DataListA[i].id).Append(",");
+                sb.Append(DataETLer.DataListA[i].new_type).Append(",");
+                sb.Append(DataETLer.DataListA[i].org_amt).Append(",");
+                sb.Append(DataETLer.DataListA[i].new_amt).Append(",");
+                sb.Append(DataETLer.DataListA[i].amt_flag == true ? "1" : "0");
                 for (int j = 0; j < 130; j++)
                 {
-                    var nv = DataETLer.NormalizeLinear(DataETLer.DataList[i].properties[j], j);
+                    var nv = DataETLer.NormalizeLinear(DataETLer.DataListA[i].properties[j], j);
                     sb.Append(",").Append(nv.ToString("0.00000000"));
                 }
-                sw.WriteLine(sb);
+                swA.WriteLine(sb);
             }
-            sw.Close();
-            wfs.Close();
+            for (int i = 0; i < DataETLer.DataListB.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(DataETLer.DataListB[i].id).Append(",");
+                sb.Append(DataETLer.DataListB[i].new_type).Append(",");
+                sb.Append(DataETLer.DataListB[i].org_amt).Append(",");
+                sb.Append(DataETLer.DataListB[i].new_amt).Append(",");
+                sb.Append(DataETLer.DataListB[i].amt_flag == true ? "1" : "0");
+                for (int j = 0; j < 130; j++)
+                {
+                    var nv = DataETLer.NormalizeLinear(DataETLer.DataListB[i].properties[j], j);
+                    sb.Append(",").Append(nv.ToString("0.00000000"));
+                }
+                swB.WriteLine(sb);
+            }
+            for (int i = 0; i < DataETLer.DataListC.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(DataETLer.DataListC[i].id).Append(",");
+                sb.Append(DataETLer.DataListC[i].new_type).Append(",");
+                sb.Append(DataETLer.DataListC[i].org_amt).Append(",");
+                sb.Append(DataETLer.DataListC[i].new_amt).Append(",");
+                sb.Append(DataETLer.DataListC[i].amt_flag == true ? "1" : "0");
+                for (int j = 0; j < 130; j++)
+                {
+                    var nv = DataETLer.NormalizeLinear(DataETLer.DataListC[i].properties[j], j);
+                    sb.Append(",").Append(nv.ToString("0.00000000"));
+                }
+                swC.WriteLine(sb);
+            }
+            swA.Close();
+            swB.Close();
+            swC.Close();
+            wfsA.Close();
+            wfsB.Close();
+            wfsC.Close();
             sr.Close();
             fs.Close();
         }
 
         public static int ParseTypeStringToInt(string str)
         {
-            if (str == "2 - U33YJHZ") { return 1; }
+            if (str == "2-U33YJHZ") { return 1; }
             else if (str == "DA_SAN_YUAN_53") { return 2; }
             else if (str == "FEI_YONG_19") { return 3; }
             else { return 0; }
@@ -112,15 +163,15 @@ namespace CDMA_ETL
             // 最值
             double cmax = double.MinValue;
             double cmin = double.MaxValue;
-            for (int i = 0; i < DataETLer.Counter; i++)
+            for (int i = 0; i < DataETLer.DataListA.Count; i++)
             {
-                if (DataETLer.DataList[i].properties[indexOfProperty] > cmax)
+                if (DataETLer.DataListA[i].properties[indexOfProperty] > cmax)
                 {
-                    cmax = DataETLer.DataList[i].properties[indexOfProperty];
+                    cmax = DataETLer.DataListA[i].properties[indexOfProperty];
                 }
-                if (DataETLer.DataList[i].properties[indexOfProperty] < cmin)
+                if (DataETLer.DataListA[i].properties[indexOfProperty] < cmin)
                 {
-                    cmin = DataETLer.DataList[i].properties[indexOfProperty];
+                    cmin = DataETLer.DataListA[i].properties[indexOfProperty];
                 }
             }
             // 存起来
@@ -136,7 +187,9 @@ namespace CDMA_ETL
 
         private static double Counter;
 
-        private static List<DataPackage> DataList;
+        private static List<DataPackage> DataListA;
+        private static List<DataPackage> DataListB;
+        private static List<DataPackage> DataListC;
 
         private static List<NormalPackage> NormalParamList;
 

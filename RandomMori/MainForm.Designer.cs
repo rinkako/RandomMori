@@ -190,7 +190,7 @@
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(48, 21);
             this.textBox5.TabIndex = 10;
-            this.textBox5.Text = "1";
+            this.textBox5.Text = "0";
             // 
             // textBox4
             // 
@@ -199,7 +199,7 @@
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(48, 21);
             this.textBox4.TabIndex = 9;
-            this.textBox4.Text = "6238";
+            this.textBox4.Text = "1000000";
             // 
             // textBox3
             // 
@@ -216,7 +216,7 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(48, 21);
             this.textBox2.TabIndex = 7;
-            this.textBox2.Text = "617";
+            this.textBox2.Text = "130";
             // 
             // textBox1
             // 
@@ -225,7 +225,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(48, 21);
             this.textBox1.TabIndex = 6;
-            this.textBox1.Text = "26";
+            this.textBox1.Text = "2";
             // 
             // label1
             // 
@@ -258,7 +258,7 @@
             this.comboBox2.Size = new System.Drawing.Size(75, 20);
             this.comboBox2.TabIndex = 7;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -270,7 +270,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "随机森林";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
